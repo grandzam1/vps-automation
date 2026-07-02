@@ -3,7 +3,10 @@
 
 set -euo pipefail
 
-GZB_APPS_MANIFEST="${GZB_APPS_MANIFEST:-/home/root1/vps-automation/projects.conf}"
+GZB_APPS_MANIFEST="${GZB_APPS_MANIFEST:-/usr/local/lib/vps-automation/projects.conf}"
+if [[ ! -f "$GZB_APPS_MANIFEST" ]]; then
+  GZB_APPS_MANIFEST="/home/root1/vps-automation/projects.conf"
+fi
 
 gzb_die() {
   echo "error: $*" >&2

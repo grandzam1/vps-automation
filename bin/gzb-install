@@ -11,6 +11,12 @@ if [[ "${EUID:-$(id -u)}" -ne 0 ]]; then
   exit 1
 fi
 
+install -d /usr/local/lib/vps-automation
+install -m 0644 "$ROOT/lib/common.sh" /usr/local/lib/vps-automation/common.sh
+install -m 0644 "$ROOT/projects.conf" /usr/local/lib/vps-automation/projects.conf
+echo "installed /usr/local/lib/vps-automation/common.sh"
+echo "installed /usr/local/lib/vps-automation/projects.conf"
+
 for script in gzb-sync gzb-laravel-refresh gzb-apps gzb-install; do
   install -m 0755 "$ROOT/bin/$script" "/usr/local/bin/$script"
   echo "installed /usr/local/bin/$script"
