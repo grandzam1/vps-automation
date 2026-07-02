@@ -1,0 +1,21 @@
+#!/bin/bash
+# Safe git pull for a VPS Laravel app (preserves local .env).
+# Usage: gzb-sync <app-path> [branch]
+
+set -euo pipefail
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=../lib/common.sh
+source "$SCRIPT_DIR/../lib/common.sh"
+
+gzb_require_cmd git
+
+[[ $# -ge 1 ]] || gzb_die "usage: gzb-sync <app-path> [branch]"
+
+APP_PATH="${1%/}"
+BRANCH="${2:-}"
+
+gzb_git_sync_pull "$APP_PATH" "$BRANCH"
+
+if [[ -f "$APP_PATH/artisan" ]]; then
+  gzb_laravel_refresh "$APP_PATH"
+fi

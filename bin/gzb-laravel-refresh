@@ -1,0 +1,12 @@
+#!/bin/bash
+# Clear Laravel caches for an app path.
+# Usage: gzb-laravel-refresh /path/to/laravel
+
+set -euo pipefail
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=../lib/common.sh
+source "$SCRIPT_DIR/../lib/common.sh"
+
+[[ $# -eq 1 ]] || gzb_die "usage: gzb-laravel-refresh <app-path>"
+
+gzb_laravel_refresh "$1"
